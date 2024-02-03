@@ -5,7 +5,20 @@ const reducer = (state, action) => {
     case 'addTodo':
       return {
         ...state,
-        todoList: [...state.todoList, action.payload]
+        todoArr: [...state.todoArr, action.payload]
+      }
+
+    case 'removeTodo':
+      // console.log('action.payload.id :>> ', action.payload.id);
+      return {
+        ...state,
+        todoArr: state.todoArr.filter(todo => todo.id !== action.payload.id)
+      }
+
+    case 'filter':
+      return {
+        ...state,
+        searchValue: action.payload.value
       }
 
     default:
@@ -13,7 +26,23 @@ const reducer = (state, action) => {
   }
 }
 
-export const store = createStore(reducer, { todoList: [], contacts: [], counterResult: 0 })
+export const store = createStore(reducer, {
+  todoArr: [{
+    name: 'car',
+    description: 'qweqweqwe',
+    id: 1
+  },
+  {
+    name: 'cat',
+    description: 'asdasdasd',
+    id: 2
+  },
+  {
+    name: 'tag',
+    description: 'zxczxczxc',
+    id: 3
+  }
+  ], contacts: [], searchValue: '', counterResult: 0
+})
 
-store.dispatch({ type: 'addTodo', payload: { nameTodo: 'qweqwe', descr: 'eqweqw' } })
 console.log(store.getState());

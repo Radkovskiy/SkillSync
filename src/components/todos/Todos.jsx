@@ -1,12 +1,16 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 import TodoForm from './TodoForm'
+import RenderTodos from './RenderTodos'
+
+
 
 const Todos = () => {
   return (
     <>
       <TodoForm />
       <SearchBar />
+      <RenderTodos />
     </>
   )
 }
@@ -14,6 +18,9 @@ const Todos = () => {
 export default Todos
 
 /* 
-три инпута: для названия, для описания, для поиска
-
+🟢поиск тудушек 
+🔴сортировка по чекбоксам
+🔴изменение тудушек
+🔴local storage
+🟢удаление тудушек
 */
