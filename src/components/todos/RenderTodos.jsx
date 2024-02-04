@@ -1,7 +1,7 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
+import { statusFilters } from './constants'
 
 
 const TodoList = styled.ul`
@@ -40,17 +40,28 @@ right: 10px;
 top: 10px;
 `
 
-const filterTodos = (todos, searchValue) => {
+const onFilterTodosByValue = (todos, searchValue) => {
   return todos.filter(todo =>
     todo.name.toLowerCase().includes(searchValue.toLowerCase()) ||
     todo.description.toLowerCase().includes(searchValue.toLowerCase()))
 }
 
+const getVisibleTodos = (todos, statusFilter) => {
+  switch (statusFilter) {
+    case statusFilters.active:
+      return todos.filter(todo => !todo.completed);
+    case statusFilters.completed:
+      return todos.filter(todo => todo.completed);
+    default:
+      return todos;
+  }
+};
+
+
 const RenderTodos = () => {
   const dispatch = useDispatch()
-  const store = useSelector((state) => state)
-  const { todoArr, searchValue } = store
-  console.log('store :>> ', store);
+  const { todoArr, searchValue, status } = useSelector((state) => state)
+  console.log('todoArr :>> ', todoArr);
 
   const handleRemove = (id) => {
     dispatch({
@@ -61,14 +72,29 @@ const RenderTodos = () => {
     })
   }
 
-  const filteredTodos = filterTodos(todoArr, searchValue)
+  const handleToggle = (id) => {
+    dispatch({
+      type: `toggleStatus`,
+      payload: {
+        id
+      }
+    })
+  }
+
+  const filteredTodosByValue = onFilterTodosByValue(todoArr, searchValue)
+  const visibleTodos = getVisibleTodos(filteredTodosByValue, status)
 
   return (
     <TodoList>
-      {filteredTodos?.map(({ name, description, id }) => (
+      {visibleTodos.map(({ name, description, id, completed }) => (
         <TodoItem key={id}>
           <TodoName>{name}</TodoName>
           <p>{description}</p>
+          <input
+            type="checkbox"
+            checked={completed}
+            onChange={() => handleToggle(id)}
+          />
           <DeleteBtn onClick={() => handleRemove(id)}></DeleteBtn>
         </TodoItem>
       ))}

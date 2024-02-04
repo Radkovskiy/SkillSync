@@ -2,6 +2,7 @@ import React from 'react'
 import SearchBar from './SearchBar'
 import TodoForm from './TodoForm'
 import RenderTodos from './RenderTodos'
+import FilterButtons from './FilterButtons'
 
 
 
@@ -10,6 +11,7 @@ const Todos = () => {
     <>
       <TodoForm />
       <SearchBar />
+      <FilterButtons/>
       <RenderTodos />
     </>
   )
