@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 import { statusFilters } from "../components/todos/constants";
+import { todosTemplate } from "../components/todos/templateTodo";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -38,8 +39,20 @@ const reducer = (state, action) => {
     case 'filterByStatus':
       return {
         ...state,
-        status: action.payload.filter,
+        statusFilter: action.payload.filter,
       }
+
+    case 'editDescription':
+      return {
+        ...state,
+        todoArr: state.todoArr.map(todo => {
+          if (todo.id === action.payload.id) {
+            return { ...todo, description: action.payload.value };
+          }
+          return todo;
+        })
+      };
+
 
     default:
       return state;
@@ -47,25 +60,11 @@ const reducer = (state, action) => {
 }
 
 export const store = createStore(reducer, {
-  todoArr: [{
-    name: 'car',
-    description: 'qweqweqwe',
-    completed: false,
-    id: 1
-  },
-  {
-    name: 'cat',
-    description: 'asdasdasd',
-    completed: true,
-    id: 2
-  },
-  {
-    name: 'tag',
-    description: 'zxczxczxc',
-    completed: false,
-    id: 3
-  }
-  ], status: statusFilters.all, contacts: [], searchValue: '', counterResult: 0
+  todoArr: todosTemplate,
+  statusFilter: statusFilters.all,
+  contacts: [],
+  searchValue: '',
+  counterResult: 0
 })
 
 console.log('state :>> ', store.getState());

@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { statusFilters } from './constants'
+import { useState } from 'react'
 
 
 const TodoList = styled.ul`
@@ -35,7 +36,7 @@ position: absolute;
 width: 20px;
 height: 20px;
 border-radius: 7px;
-background-color: #7186e4;
+background-color: #eb8787;
 right: 10px;
 top: 10px;
 `
@@ -46,8 +47,8 @@ const onFilterTodosByValue = (todos, searchValue) => {
     todo.description.toLowerCase().includes(searchValue.toLowerCase()))
 }
 
-const getVisibleTodos = (todos, statusFilter) => {
-  switch (statusFilter) {
+const onFilterTodosByStatus = (todos, status) => {
+  switch (status) {
     case statusFilters.active:
       return todos.filter(todo => !todo.completed);
     case statusFilters.completed:
@@ -58,10 +59,12 @@ const getVisibleTodos = (todos, statusFilter) => {
 };
 
 
+
+
 const RenderTodos = () => {
   const dispatch = useDispatch()
-  const { todoArr, searchValue, status } = useSelector((state) => state)
-  console.log('todoArr :>> ', todoArr);
+  const { todoArr, searchValue, statusFilter } = useSelector((state) => state)
+  const [editingTodo, setEditingTodo] = useState(null);
 
   const handleRemove = (id) => {
     dispatch({
@@ -81,15 +84,36 @@ const RenderTodos = () => {
     })
   }
 
+  const changeValue = (e, id) => {
+    const value = e.currentTarget.value
+    if (!value.length) return
+    dispatch({
+      type: 'editDescription',
+      payload: {
+        value, id
+      }
+    })
+  }
+
   const filteredTodosByValue = onFilterTodosByValue(todoArr, searchValue)
-  const visibleTodos = getVisibleTodos(filteredTodosByValue, status)
+  const visibleTodos = onFilterTodosByStatus(filteredTodosByValue, statusFilter)
 
   return (
     <TodoList>
       {visibleTodos.map(({ name, description, id, completed }) => (
         <TodoItem key={id}>
           <TodoName>{name}</TodoName>
-          <p>{description}</p>
+          <p
+            onDoubleClick={() => setEditingTodo(id)}>
+            {editingTodo === id ?
+              <input
+                placeholder={`${description}`}
+                onBlur={e => {
+                  setEditingTodo(null)
+                  changeValue(e, id)
+                }} />
+              : description}
+          </p>
           <input
             type="checkbox"
             checked={completed}
