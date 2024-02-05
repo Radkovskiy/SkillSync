@@ -17,8 +17,9 @@ const SearchBar = () => {
 
   return (
     <div>
-      Поиск
+      <p className='search'>Поиск</p>
       <input
+        className='searchInput input'
         type='text'
         onChange={onFilter}
       />

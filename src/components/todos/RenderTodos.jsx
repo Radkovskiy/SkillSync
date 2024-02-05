@@ -16,27 +16,24 @@ padding: 20px;
 margin-left: auto;
 margin-right: auto;
 `
-
 const TodoItem = styled.li`
 position: relative;
-background-color: #fff9de;
+background-color:#BFB4AA;
 width: 420px;
-/* margin-bottom: 20px; */
 border-radius: 10px;
 padding: 25px;
+box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.3);
 `
-
 const TodoName = styled.p`
 margin-bottom: 20px;
 font-weight: bold;
 `
-
 const DeleteBtn = styled.button`
 position: absolute;
 width: 20px;
 height: 20px;
 border-radius: 7px;
-background-color: #eb8787;
+background-color: #8C7549;
 right: 10px;
 top: 10px;
 `
@@ -65,6 +62,7 @@ const RenderTodos = () => {
   const dispatch = useDispatch()
   const { todoArr, searchValue, statusFilter } = useSelector((state) => state)
   const [editingTodo, setEditingTodo] = useState(null);
+  const [editingEl, setEditingEl] = useState(null);
 
   const handleRemove = (id) => {
     dispatch({
@@ -84,15 +82,34 @@ const RenderTodos = () => {
     })
   }
 
-  const changeValue = (e, id) => {
+  const changeValue = (e, id, type) => {
     const value = e.currentTarget.value
     if (!value.length) return
-    dispatch({
-      type: 'editDescription',
-      payload: {
-        value, id
-      }
-    })
+
+    switch (type) {
+      case 'name':
+        dispatch({
+          type: 'editName',
+          payload: {
+            value, id
+          }
+        });
+        break;
+
+
+      case 'description':
+        dispatch({
+          type: 'editDescription',
+          payload: {
+            value, id
+          }
+        });
+        break;
+
+      default:
+        break;
+    }
+
   }
 
   const filteredTodosByValue = onFilterTodosByValue(todoArr, searchValue)
@@ -102,15 +119,28 @@ const RenderTodos = () => {
     <TodoList>
       {visibleTodos.map(({ name, description, id, completed }) => (
         <TodoItem key={id}>
-          <TodoName>{name}</TodoName>
+          <TodoName onDoubleClick={() => {
+            setEditingEl('name')
+            setEditingTodo(id)
+          }}>{editingEl === 'name' && editingTodo === id ?
+            <input
+              placeholder={`${name}`}
+              onBlur={e => {
+                setEditingTodo(null)
+                changeValue(e, id, 'name')
+              }} />
+            : name}</TodoName>
           <p
-            onDoubleClick={() => setEditingTodo(id)}>
-            {editingTodo === id ?
+            onDoubleClick={() => {
+              setEditingEl('description')
+              setEditingTodo(id)
+            }}>
+            {editingEl === 'description' && editingTodo === id ?
               <input
                 placeholder={`${description}`}
                 onBlur={e => {
                   setEditingTodo(null)
-                  changeValue(e, id)
+                  changeValue(e, id, 'description')
                 }} />
               : description}
           </p>

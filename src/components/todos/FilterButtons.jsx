@@ -15,9 +15,15 @@ const FilterButtons = () => {
 
   return (
     <div>
-      <button onClick={() => handleFilterChange(statusFilters.all)} /* selected={filter === statusFilters.all} */>All</button>
-      <button onClick={() => handleFilterChange(statusFilters.active)} /* selected={filter === statusFilters.active} */>Active</button>
-      <button onClick={() => handleFilterChange(statusFilters.completed)} /* selected={filter === statusFilters.completed} */>Completed</button>
+      <button
+        className="button"
+        onClick={() => handleFilterChange(statusFilters.all)} /* selected={filter === statusFilters.all} */>All</button>
+      <button
+        className="button"
+        onClick={() => handleFilterChange(statusFilters.active)} /* selected={filter === statusFilters.active} */>Active</button>
+      <button
+        className="button"
+        onClick={() => handleFilterChange(statusFilters.completed)} /* selected={filter === statusFilters.completed} */>Completed</button>
     </div>
   )
 }

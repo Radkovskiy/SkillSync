@@ -8,12 +8,14 @@ import FilterButtons from './FilterButtons'
 
 const Todos = () => {
   return (
-    <>
+    <div className='container'>
       <TodoForm />
-      <SearchBar />
-      <FilterButtons/>
+      <div className='filtersWrapp'>
+        <SearchBar />
+        <FilterButtons />
+      </div>
       <RenderTodos />
-    </>
+    </div>
   )
 }
 

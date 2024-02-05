@@ -53,6 +53,17 @@ const reducer = (state, action) => {
         })
       };
 
+    case 'editName':
+      return {
+        ...state,
+        todoArr: state.todoArr.map(todo => {
+          if (todo.id === action.payload.id) {
+            return { ...todo, name: action.payload.value };
+          }
+          return todo;
+        })
+      };
+
 
     default:
       return state;

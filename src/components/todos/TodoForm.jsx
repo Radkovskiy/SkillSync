@@ -50,20 +50,26 @@ const TodoForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      className='formWrapp'
+      onSubmit={handleSubmit}>
       <NameInput
+        className='inputName input'
         type='text'
         name='name'
         onChange={handleChange}
         value={name}
       />
-      <input
+      <textarea
+        className='inputDescription input'
         type='text'
         name='description'
         onChange={handleChange}
         value={description}
       />
-      <button type='submit'>
+      <button
+        className='button'
+        type='submit'>
         Создать
       </button>
     </form>
