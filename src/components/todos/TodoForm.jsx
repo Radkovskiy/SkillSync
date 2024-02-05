@@ -3,8 +3,27 @@ import { useDispatch } from 'react-redux'
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
+const FormWrapp = styled.form`
+    display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: flex-start;
+  justify-content: flex-start;
+
+  padding: 20px 40px 20px 40px;
+`
+
 const NameInput = styled.input`
 margin-right: 10px;
+`
+const InputDescription = styled.textarea`
+  min-width: 275px;
+  min-height: 50px;
+  max-width: 420px;
+  max-height: 133px;
+  margin-bottom: 10px;
+  border-radius: 10px;
 `
 
 
@@ -50,8 +69,7 @@ const TodoForm = () => {
   }
 
   return (
-    <form
-      className='formWrapp'
+    <FormWrapp
       onSubmit={handleSubmit}>
       <NameInput
         className='inputName input'
@@ -60,8 +78,8 @@ const TodoForm = () => {
         onChange={handleChange}
         value={name}
       />
-      <textarea
-        className='inputDescription input'
+      <InputDescription
+        className='input'
         type='text'
         name='description'
         onChange={handleChange}
@@ -72,7 +90,7 @@ const TodoForm = () => {
         type='submit'>
         Создать
       </button>
-    </form>
+    </FormWrapp>
   )
 }
 

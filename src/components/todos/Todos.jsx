@@ -3,17 +3,25 @@ import SearchBar from './SearchBar'
 import TodoForm from './TodoForm'
 import RenderTodos from './RenderTodos'
 import FilterButtons from './FilterButtons'
+import styled from 'styled-components'
 
+const FiltersWrapp = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 40px;
+  padding-right: 40px;
+`
 
 
 const Todos = () => {
   return (
     <div className='container'>
       <TodoForm />
-      <div className='filtersWrapp'>
+      <FiltersWrapp>
         <SearchBar />
         <FilterButtons />
-      </div>
+      </FiltersWrapp>
       <RenderTodos />
     </div>
   )

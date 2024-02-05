@@ -1,5 +1,10 @@
 import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
 
+const SearchText = styled.p`
+  color: #BFB4AA;
+  
+`
 
 
 const SearchBar = () => {
@@ -17,7 +22,7 @@ const SearchBar = () => {
 
   return (
     <div>
-      <p className='search'>Поиск</p>
+      <SearchText className='search'>Поиск</SearchText>
       <input
         className='searchInput input'
         type='text'

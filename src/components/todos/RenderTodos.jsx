@@ -18,15 +18,28 @@ margin-right: auto;
 `
 const TodoItem = styled.li`
 position: relative;
+
+display: flex;
+
 background-color:#BFB4AA;
+
 width: 420px;
 border-radius: 10px;
-padding: 25px;
+padding: 25px 50px;
 box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.3);
 `
 const TodoName = styled.p`
 margin-bottom: 20px;
 font-weight: bold;
+`
+const InputEditName = styled.input`
+    font-weight: bold;
+  font-size: 16px;
+`
+const CheckboxCompleted = styled.input`
+margin-left: auto;
+margin-right: 10px;
+width: 18px;
 `
 const DeleteBtn = styled.button`
 position: absolute;
@@ -60,7 +73,7 @@ const onFilterTodosByStatus = (todos, status) => {
 
 const RenderTodos = () => {
   const dispatch = useDispatch()
-  const { todoArr, searchValue, statusFilter } = useSelector((state) => state)
+  const { todoArr, searchValue, statusFilter } = useSelector(state => state)
   const [editingTodo, setEditingTodo] = useState(null);
   const [editingEl, setEditingEl] = useState(null);
 
@@ -82,11 +95,11 @@ const RenderTodos = () => {
     })
   }
 
-  const changeValue = (e, id, type) => {
+  const changeValue = (e, id, typeEdit) => {
     const value = e.currentTarget.value
     if (!value.length) return
 
-    switch (type) {
+    switch (typeEdit) {
       case 'name':
         dispatch({
           type: 'editName',
@@ -119,32 +132,36 @@ const RenderTodos = () => {
     <TodoList>
       {visibleTodos.map(({ name, description, id, completed }) => (
         <TodoItem key={id}>
-          <TodoName onDoubleClick={() => {
-            setEditingEl('name')
-            setEditingTodo(id)
-          }}>{editingEl === 'name' && editingTodo === id ?
-            <input
-              placeholder={`${name}`}
-              onBlur={e => {
-                setEditingTodo(null)
-                changeValue(e, id, 'name')
-              }} />
-            : name}</TodoName>
-          <p
-            onDoubleClick={() => {
-              setEditingEl('description')
+          <div>
+            <TodoName onDoubleClick={() => {
+              setEditingEl('name')
               setEditingTodo(id)
-            }}>
-            {editingEl === 'description' && editingTodo === id ?
-              <input
-                placeholder={`${description}`}
+            }}>{editingEl === 'name' && editingTodo === id ?
+              <InputEditName
+                className='input inputEditName'
+                placeholder={`${name}`}
                 onBlur={e => {
                   setEditingTodo(null)
-                  changeValue(e, id, 'description')
+                  changeValue(e, id, 'name')
                 }} />
-              : description}
-          </p>
-          <input
+              : name}</TodoName>
+            <p
+              onDoubleClick={() => {
+                setEditingEl('description')
+                setEditingTodo(id)
+              }}>
+              {editingEl === 'description' && editingTodo === id ?
+                <input
+                  className='input'
+                  placeholder={`${description}`}
+                  onBlur={e => {
+                    setEditingTodo(null)
+                    changeValue(e, id, 'description')
+                  }} />
+                : description}
+            </p>
+          </div>
+          <CheckboxCompleted
             type="checkbox"
             checked={completed}
             onChange={() => handleToggle(id)}

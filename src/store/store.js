@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 import { statusFilters } from "../components/todos/constants";
-import { todosTemplate } from "../components/todos/templateTodo";
+import { contactsTemplate, todosTemplate } from "./templateArrs";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -64,6 +64,33 @@ const reducer = (state, action) => {
         })
       };
 
+    case 'setName':
+      return {
+        ...state,
+        contacts: {
+          ...state.contacts,
+          newName: action.payload.name
+        }
+      }
+
+    case 'setNumber':
+      return {
+        ...state,
+        contacts: {
+          ...state.contacts,
+          newNumber: action.payload.number
+        }
+      }
+
+    case 'addContact':
+      return {
+        ...state,
+        contacts: {
+          contactsArr: [...state.contacts.contactsArr, action.payload],
+          newName: '',
+          newNumber: ''
+        }
+      }
 
     default:
       return state;
@@ -73,9 +100,13 @@ const reducer = (state, action) => {
 export const store = createStore(reducer, {
   todoArr: todosTemplate,
   statusFilter: statusFilters.all,
-  contacts: [],
+  contacts: {
+    contactsArr: contactsTemplate,
+    newName: '',
+    newNumber: '',
+  },
   searchValue: '',
   counterResult: 0
 })
 
-console.log('state :>> ', store.getState());
+// console.log('store :>> ', store);

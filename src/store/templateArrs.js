@@ -31,7 +31,7 @@ export const todosTemplate = [{
 {
   name: 'Header',
   description: 'стилизировать шапку',
-  completed: false,
+  completed: true,
   id: 6
 },
 {
@@ -47,3 +47,19 @@ export const todosTemplate = [{
   id: 8
 },
 ]
+
+export const contactsTemplate = [{
+  name: 'Vlad',
+  number: '+380997786197',
+  id: 1
+},
+{
+  name: 'Rad',
+  number: '+380959257844',
+  id: 2
+},
+{
+  name: 'Kov',
+  number: '+380506698746',
+  id: 3
+}]

@@ -5,11 +5,13 @@ const Layout = () => {
   return (
     <>
       <header>
-        <nav>
-          <NavLink to="/todos">Todos</NavLink>
-          <NavLink to="/contacts">Contacts</NavLink>
-          <NavLink to="/counter">Counter</NavLink>
-        </nav>
+        <div className="container">
+          <nav className='nav'>
+            <NavLink className={'navLink'} to="/todos">Todos</NavLink>
+            <NavLink className={'navLink'} to="/contacts">Contacts</NavLink>
+            <NavLink className={'navLink'} to="/counter">Counter</NavLink>
+          </nav>
+        </div>
       </header>
       <main>
         <Outlet />
