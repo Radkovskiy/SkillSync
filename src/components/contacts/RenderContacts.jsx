@@ -7,7 +7,19 @@ const ContactList = styled.ul`
   flex-wrap: wrap;
   gap: 10px;
 `
+
+const DeleteBtn = styled.button`
+position: absolute;
+width: 15px;
+height: 15px;
+border-radius: 5px;
+background-color: #8C7549;
+right: 10px;
+top: 10px;
+`
+
 const ContactItem = styled.li`
+position: relative;
 padding: 5px 50px;
 background-color:#BFB4AA;
 border-radius: 10px;
@@ -23,8 +35,11 @@ const RenderContacts = () => {
     <ContactList>
       {contactsArr.map(({ name, number, id }) => (
         <ContactItem key={id}>
-          <p>{name}</p>
-          <p>{number}</p>
+          <div>
+            <p>{name}</p>
+            <p>{number}</p>
+          </div>
+          <DeleteBtn></DeleteBtn>
         </ContactItem>
       ))}
     </ContactList>
