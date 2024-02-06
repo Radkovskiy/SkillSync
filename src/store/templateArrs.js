@@ -37,7 +37,7 @@ export const todosTemplate = [{
 {
   name: 'Contacts',
   description: 'написать контакты',
-  completed: false,
+  completed: true,
   id: 7
 },
 {
