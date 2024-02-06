@@ -1,13 +1,13 @@
 import React from 'react'
 import RenderContacts from './RenderContacts'
-import SearchBar from './SearchBar'
+import ContactsSearchBar from './ContactsSearchBar'
 import ContactForm from './ContactForm'
 
 const Contacts = () => {
   return (
     <div className="container">
       <ContactForm />
-      <SearchBar />
+      <ContactsSearchBar />
       <RenderContacts />
     </div>
   )

@@ -22,6 +22,7 @@ position: relative;
 display: flex;
 
 background-color:#BFB4AA;
+color: #331C06;
 
 width: 420px;
 border-radius: 10px;

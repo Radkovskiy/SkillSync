@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchBar from './SearchBar'
+import TodoSearchBar from './TodoSearchBar'
 import TodoForm from './TodoForm'
 import RenderTodos from './RenderTodos'
 import FilterButtons from './FilterButtons'
@@ -19,7 +19,7 @@ const Todos = () => {
     <div className='container'>
       <TodoForm />
       <FiltersWrapp>
-        <SearchBar />
+        <TodoSearchBar />
         <FilterButtons />
       </FiltersWrapp>
       <RenderTodos />

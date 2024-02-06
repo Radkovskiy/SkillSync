@@ -1,17 +1,16 @@
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 
-const SearchText = styled.p`
-  color: #BFB4AA;
-  
+const SearchWrapp = styled.div`
+  padding-bottom: 20px;
+  padding-left: 40px;
 `
 
-
-const SearchBar = () => {
+const ContactsSearchBar = () => {
   const dispatch = useDispatch()
 
   const onFilter = ({ target: { value } }) => {
-
     dispatch({
       type: 'filterByValue',
       payload: {
@@ -20,16 +19,16 @@ const SearchBar = () => {
     })
   }
 
+
   return (
-    <div>
-      <SearchText className='search'>Поиск</SearchText>
+    <SearchWrapp>
+      <p>Поиск</p>
       <input
-        className='searchInput input'
-        type='text'
+        className='input'
         onChange={onFilter}
-      />
-    </div>
+        type="text" />
+    </SearchWrapp>
   )
 }
 
-export default SearchBar
+export default ContactsSearchBar

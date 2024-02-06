@@ -1,12 +1,12 @@
-import React from 'react'
 import { useDispatch } from 'react-redux'
 
 
 
-const SearchBar = () => {
+const TodoSearchBar = () => {
   const dispatch = useDispatch()
 
   const onFilter = ({ target: { value } }) => {
+
     dispatch({
       type: 'filterByValue',
       payload: {
@@ -15,15 +15,16 @@ const SearchBar = () => {
     })
   }
 
-
   return (
     <div>
       <p>Поиск</p>
       <input
+        className='searchInput input'
+        type='text'
         onChange={onFilter}
-        type="text" />
+      />
     </div>
   )
 }
 
-export default SearchBar
+export default TodoSearchBar

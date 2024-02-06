@@ -1,6 +1,15 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
+
+const FormWrapp = styled.form`
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  
+  padding: 20px 40px 20px 40px;
+`
 
 
 const ContactForm = () => {
@@ -60,16 +69,18 @@ const ContactForm = () => {
 
   return (
     <>
-      <form
+      <FormWrapp
         onSubmit={handleSubmit}>
+          Имя
         <input
-          className='input'
+          className='input contactInput'
           type="text"
           name='name'
           value={newName}
           onChange={e => handleChange(e, 'setName')} />
+          Телефон
         <input
-          className='input'
+          className='input contactInput'
           type="tel"
           name='number'
           pattern="[0-9+]+"
@@ -80,7 +91,7 @@ const ContactForm = () => {
           className='button'>
           Создать
         </button>
-      </form>
+      </FormWrapp>
     </>
   )
 }
