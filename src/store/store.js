@@ -3,6 +3,7 @@ import { statusFilters } from "../components/todos/constants";
 import { contactsTemplate, todosTemplate } from "./templateArrs";
 
 const reducer = (state, action) => {
+
   switch (action.type) {
     case 'addTodo':
       return {
@@ -14,6 +15,17 @@ const reducer = (state, action) => {
       return {
         ...state,
         todoArr: state.todoArr.filter(todo => todo.id !== action.payload.id)
+      }
+    case 'removeContact':
+      return {
+        ...state,
+        contacts: {
+          contactsArr: state.contacts.contactsArr.filter(contact =>
+            contact.id !== action.payload.id
+          ),
+          newName: state.contacts.newName,
+          newNumber: state.contacts.newNumber
+        }
       }
 
     case 'toggleStatus':
@@ -95,6 +107,21 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+
+  /* 
+  const addtodo = () => {
+   return {
+     ...state,
+     todoArr: [...state.todoArr, action.payload]
+   }
+ }
+ 
+ const actionRedusers = {
+   addtodo
+ }
+  
+ const fn = actionRedusers[action.type]
+ */
 }
 
 export const store = createStore(reducer, {
