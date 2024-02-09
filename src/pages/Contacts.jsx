@@ -1,7 +1,7 @@
 import React from 'react'
-import RenderContacts from './RenderContacts'
-import ContactsSearchBar from './ContactsSearchBar'
-import ContactForm from './ContactForm'
+import RenderContacts from '../components/contacts/RenderContacts'
+import ContactsSearchBar from '../components/contacts/ContactsSearchBar'
+import ContactForm from '../components/contacts/ContactForm'
 
 const Contacts = () => {
   return (

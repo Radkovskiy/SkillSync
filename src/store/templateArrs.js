@@ -1,53 +1,3 @@
-export const todosTemplate = [{
-  name: 'Todo',
-  description: 'поиск',
-  completed: true,
-  id: 1
-},
-{
-  name: 'Todo',
-  description: 'сортировка по чекбоксам',
-  completed: true,
-  id: 2
-},
-{
-  name: 'Todo',
-  description: 'изменение',
-  completed: true,
-  id: 3
-},
-{
-  name: 'Todo',
-  description: 'удаление',
-  completed: true,
-  id: 4
-},
-{
-  name: 'Todo',
-  description: 'local storage',
-  completed: false,
-  id: 5
-},
-{
-  name: 'Header',
-  description: 'стилизировать шапку',
-  completed: true,
-  id: 6
-},
-{
-  name: 'Contacts',
-  description: 'написать контакты',
-  completed: true,
-  id: 7
-},
-{
-  name: 'Counter',
-  description: 'написать счетчик',
-  completed: false,
-  id: 8
-},
-]
-
 export const contactsTemplate = [{
   name: 'Vlad',
   number: '+380997786197',
@@ -63,3 +13,37 @@ export const contactsTemplate = [{
   number: '+380506698746',
   id: 3
 }]
+
+export const todosTemplate = [{
+  name: 'Разработка интерфейса',
+  description: 'Создать креативный и удобный интерфейс для приложения',
+  completed: true,
+  id: 1
+},
+{
+  name: 'Оптимизация кода',
+  description: 'Провести рефакторинг и оптимизацию кода для повышения производительности',
+  completed: true,
+  id: 2
+},
+{
+  name: 'Тестирование новых функций',
+  description: 'Провести тщательное тестирование и проверку работоспособности новых функций',
+  completed: false,
+  id: 3
+},
+{
+  name: 'Анализ пользовательского опыта',
+  description: 'Провести анализ обратной связи пользователей для улучшения пользовательского опыта',
+  completed: false,
+  id: 4
+},
+{
+  name: 'Подготовка к релизу',
+  description: 'Подготовить проект к предстоящему релизу и обеспечить стабильную работу',
+  completed: true,
+  id: 5
+}
+]
+
+

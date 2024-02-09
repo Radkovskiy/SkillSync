@@ -6,11 +6,9 @@ import { useState } from 'react'
 
 
 const TodoList = styled.ul`
-width: 1340px ;
 display: flex;
 flex-wrap: wrap;
-/* background-color: darkgray; */
-/* flex-direction: column; */
+
 gap: 20px;
 padding: 20px;
 margin-left: auto;
@@ -24,23 +22,24 @@ display: flex;
 background-color:#BFB4AA;
 color: #331C06;
 
-width: 420px;
+width: 360px;
 border-radius: 10px;
-padding: 25px 50px;
+padding: 25px 35px 25px 20px;
 box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.3);
 `
 const TodoName = styled.p`
-margin-bottom: 20px;
+margin-bottom: 10px;
 font-weight: bold;
 `
 const InputEditName = styled.input`
-    font-weight: bold;
+  font-weight: bold;
   font-size: 16px;
 `
 const CheckboxCompleted = styled.input`
-margin-left: auto;
+margin-top: 5px;
 margin-right: 10px;
-width: 18px;
+width: 13px;
+height: 13px;
 `
 const DeleteBtn = styled.button`
 position: absolute;
@@ -133,6 +132,11 @@ const RenderTodos = () => {
     <TodoList>
       {visibleTodos.map(({ name, description, id, completed }) => (
         <TodoItem key={id}>
+          <CheckboxCompleted
+            type="checkbox"
+            checked={completed}
+            onChange={() => handleToggle(id)}
+          />
           <div>
             <TodoName onDoubleClick={() => {
               setEditingEl('name')
@@ -162,11 +166,7 @@ const RenderTodos = () => {
                 : description}
             </p>
           </div>
-          <CheckboxCompleted
-            type="checkbox"
-            checked={completed}
-            onChange={() => handleToggle(id)}
-          />
+
           <DeleteBtn onClick={() => handleRemove(id)}></DeleteBtn>
         </TodoItem>
       ))}

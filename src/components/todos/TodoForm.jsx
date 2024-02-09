@@ -4,24 +4,24 @@ import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 const FormWrapp = styled.form`
-    display: flex;
+  display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
   flex-direction: column;
   align-content: flex-start;
   justify-content: flex-start;
 
-  padding: 20px 40px 20px 40px;
+  padding: 20px;
 `
 
 const NameInput = styled.input`
-margin-right: 10px;
+  margin-right: 10px;
 `
 const InputDescription = styled.textarea`
   min-width: 275px;
   min-height: 50px;
-  max-width: 420px;
-  max-height: 133px;
+  max-width: 360px;
+  max-height: 110px;
   margin-bottom: 10px;
   border-radius: 10px;
 `

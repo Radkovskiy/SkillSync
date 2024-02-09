@@ -4,10 +4,21 @@ import styled from 'styled-components'
 
 const ContactList = styled.ul`
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-`
+  flex-wrap:wrap;
 
+  gap: 10px;
+  padding: 10px 20px;
+`
+const ContactItem = styled.li`
+  position: relative;
+  padding: 5px 50px;
+
+  background-color:#BFB4AA;
+  color: #331C06;
+
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.3);
+`
 const DeleteBtn = styled.button`
 position: absolute;
 width: 15px;
@@ -16,17 +27,6 @@ border-radius: 5px;
 background-color: #8C7549;
 right: 10px;
 top: 10px;
-`
-
-const ContactItem = styled.li`
-position: relative;
-padding: 5px 50px;
-
-background-color:#BFB4AA;
-color: #331C06;
-
-border-radius: 10px;
-box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.3);
 `
 
 const onFilterContactsByValue = (contacts, searchValue) => {

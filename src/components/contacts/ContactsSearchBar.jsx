@@ -3,8 +3,7 @@ import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 
 const SearchWrapp = styled.div`
-  padding-bottom: 20px;
-  padding-left: 40px;
+  padding: 10px 40px;
 `
 
 const ContactsSearchBar = () => {

@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
-import Todos from "./todos/Todos";
-import Contacts from "./contacts/Contacts";
-import Counter from "./counter/Counter";
+import Todos from "../pages/Todos";
+import Contacts from "../pages/Contacts";
+import Counter from "../pages/Counter";
 
 function App() {
   return (

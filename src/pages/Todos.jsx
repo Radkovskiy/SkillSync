@@ -1,8 +1,8 @@
 import React from 'react'
-import TodoSearchBar from './TodoSearchBar'
-import TodoForm from './TodoForm'
-import RenderTodos from './RenderTodos'
-import FilterButtons from './FilterButtons'
+import TodoSearchBar from '../components/todos/TodoSearchBar'
+import TodoForm from '../components/todos/TodoForm'
+import RenderTodos from '../components/todos/RenderTodos'
+import FilterButtons from '../components/todos/FilterButtons'
 import styled from 'styled-components'
 
 const FiltersWrapp = styled.div`
