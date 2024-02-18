@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { statusFilters } from './constants'
 import { useState } from 'react'
+import { editDescription, editName, removeTodo, toggleStatus } from '../../redux/todoSlice/todoSlice'
+import { selectFilterValue } from '../../redux/searchValueSlice/selectors'
+import { todoState } from '../../redux/todoSlice/selectors'
 
 
 const TodoList = styled.ul`
@@ -73,26 +76,18 @@ const onFilterTodosByStatus = (todos, status) => {
 
 const RenderTodos = () => {
   const dispatch = useDispatch()
-  const { todoArr, searchValue, statusFilter } = useSelector(state => state)
+  const todo = useSelector(todoState)
+  const filterValue = useSelector(selectFilterValue)
   const [editingTodo, setEditingTodo] = useState(null);
   const [editingEl, setEditingEl] = useState(null);
 
+
   const handleRemove = (id) => {
-    dispatch({
-      type: 'removeTodo',
-      payload: {
-        id
-      }
-    })
+    dispatch(removeTodo(id))
   }
 
   const handleToggle = (id) => {
-    dispatch({
-      type: `toggleStatus`,
-      payload: {
-        id
-      }
-    })
+    dispatch(toggleStatus(id))
   }
 
   const changeValue = (e, id, typeEdit) => {
@@ -101,22 +96,12 @@ const RenderTodos = () => {
 
     switch (typeEdit) {
       case 'name':
-        dispatch({
-          type: 'editName',
-          payload: {
-            value, id
-          }
-        });
+        dispatch(editName({ value, id }));
         break;
 
 
       case 'description':
-        dispatch({
-          type: 'editDescription',
-          payload: {
-            value, id
-          }
-        });
+        dispatch(editDescription({ value, id }));
         break;
 
       default:
@@ -125,8 +110,9 @@ const RenderTodos = () => {
 
   }
 
-  const filteredTodosByValue = onFilterTodosByValue(todoArr, searchValue)
-  const visibleTodos = onFilterTodosByStatus(filteredTodosByValue, statusFilter)
+
+  const filteredTodosByValue = onFilterTodosByValue(todo.todoArr, filterValue)
+  const visibleTodos = onFilterTodosByStatus(filteredTodosByValue, todo.statusFilter)
 
   return (
     <TodoList>

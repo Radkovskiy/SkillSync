@@ -1,7 +1,8 @@
-import React from 'react'
+ 
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import { addContact, setName, setNumber } from '../../redux/contactsSlice/contactsSlice';
 
 const FormWrapp = styled.form`
   display: flex;
@@ -17,11 +18,15 @@ const ContactForm = () => {
   const { contacts: { newName, newNumber } } = useSelector(state => state);
 
   const handleChange = ({ target: { value } }, type) => {
-    dispatch({
-      type,
-      payload: { [type === 'setName' ? 'name' : 'number']: value }
-    });
-    /*     switch (type) {
+    type === 'setName' ? dispatch(setName(value)) : dispatch(setNumber(value))
+
+    /*     
+        dispatch({
+          type,
+          payload: { [type === 'setNumber' ? 'name' : 'number']: value }
+        }); */
+    /*     
+        switch (type) {
           case 'setName':
             dispatch({
               type: 'setName',
@@ -42,7 +47,8 @@ const ContactForm = () => {
     
           default:
             break;
-        } */
+        } 
+    */
   }
 
   const handleSubmit = (e) => {
@@ -51,14 +57,13 @@ const ContactForm = () => {
     const isEmptyInputValue = newName.trim() && newNumber.trim()
 
     if (isEmptyInputValue) {
-      dispatch({
-        type: 'addContact',
-        payload: {
-          name: newName,
-          number: newNumber,
-          id: uuidv4()
-        }
-      })
+      dispatch(addContact({
+        name: newName,
+        number: newNumber,
+        id: uuidv4()
+      }))
+      console.log('e.target :>> ', e.target);
+      e.target.reset();
     } else {
       alert("Заполни оба поля!")
       return
@@ -71,14 +76,14 @@ const ContactForm = () => {
     <>
       <FormWrapp
         onSubmit={handleSubmit}>
-          Имя
+        Имя
         <input
           className='input contactInput'
           type="text"
           name='name'
           value={newName}
           onChange={e => handleChange(e, 'setName')} />
-          Телефон
+        Телефон
         <input
           className='input contactInput'
           type="tel"

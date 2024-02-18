@@ -1,16 +1,11 @@
 import { useDispatch } from "react-redux"
 import { statusFilters } from "./constants";
+import { filterByStatus } from "../../redux/todoSlice/todoSlice";
 
 const FilterButtons = () => {
   const dispatch = useDispatch();
 
-  const handleFilterChange = filter => dispatch({
-    type: 'filterByStatus',
-    payload: {
-      filter
-    }
-  }
-  );
+  const handleFilterChange = filter => dispatch(filterByStatus(filter));
 
 
   return (

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import { addTodo } from '../../redux/todoSlice/todoSlice';
 
 const FormWrapp = styled.form`
   display: flex;
@@ -13,7 +14,6 @@ const FormWrapp = styled.form`
 
   padding: 20px;
 `
-
 const NameInput = styled.input`
   margin-right: 10px;
 `
@@ -48,15 +48,12 @@ const TodoForm = () => {
     const isEmptyInputValue = name.trim() && description.trim()
 
     if (isEmptyInputValue) {
-      dispatch({
-        type: 'addTodo',
-        payload: {
-          name,
-          description,
-          completed: false,
-          id: uuidv4()
-        }
-      })
+      dispatch(addTodo({
+        name,
+        description,
+        completed: false,
+        id: uuidv4()
+      }))
       reset()
     } else {
       alert("Заполни оба поля!")
