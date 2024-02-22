@@ -1,7 +1,5 @@
 import { searchValueReducer } from "./searchValueSlice/searchValueSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-// import { persistedTodosReducer } from "./todoSlice/todoSlice";
-// import { persistedContactsReducer } from "./contactsSlice/contactsSlice";
 import storage from "redux-persist/lib/storage";
 import { persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import { contactSliceReduser } from "./contactsSlice/contactsSlice";
