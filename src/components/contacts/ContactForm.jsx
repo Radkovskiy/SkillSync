@@ -1,4 +1,4 @@
- 
+
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
@@ -62,8 +62,6 @@ const ContactForm = () => {
         number: newNumber,
         id: uuidv4()
       }))
-      console.log('e.target :>> ', e.target);
-      e.target.reset();
     } else {
       alert("Заполни оба поля!")
       return

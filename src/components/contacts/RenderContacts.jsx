@@ -43,8 +43,6 @@ const RenderContacts = () => {
   const { contactsArr } = useSelector(contactsState);
   const searchValue = useSelector(selectFilterValue);
 
-  console.log('contactsArr :>> ', contactsArr);
-
   const handleClick = (id) => {
     dispatch(removeContact(id))
   }

@@ -3,7 +3,7 @@ import { statusFilters } from "../../components/todos/constants"
 import { todosTemplate } from "../templateArrs"
 
 const todoSlice = createSlice({
-  name: 'todoArr',
+  name: 'todo',
   initialState: {
     todoArr: todosTemplate,
     statusFilter: statusFilters.all,
@@ -29,9 +29,8 @@ const todoSlice = createSlice({
       const todoId = action.payload;
       const toggledTodo = state.todoArr.find(todo => todo.id === todoId);
 
-      if (toggledTodo) { // почему сюда поступает нужная тудушка? если тут иф, то подразумивается, что этот иф перебирает массив и пропускает нужный элемент?
-        toggledTodo.completed = !toggledTodo.completed;
-      }
+      toggledTodo.completed = !toggledTodo.completed;
+
       /* 
       что значит if (toggledTodo)? к чему это? я понимаю, что если бы я перебирал массив todoArr
       и внутри перебора на каждой итерации проверял каждую тудушку на конкретный элемент массива.
@@ -68,9 +67,7 @@ const todoSlice = createSlice({
       const todoId = action.payload.id;
       const editedTodo = state.todoArr.find(todo => todo.id === todoId);
 
-      if (editedTodo) {
-        editedTodo.name = action.payload.value
-      }
+      editedTodo.name = action.payload.value
       /*       
             return {
               ...state,
@@ -86,9 +83,7 @@ const todoSlice = createSlice({
       const todoId = action.payload.id;
       const editedTodo = state.todoArr.find(todo => todo.id === todoId);
 
-      if (editedTodo) {
-        editedTodo.description = action.payload.value
-      }
+      editedTodo.description = action.payload.value
       /*       
             return {
               ...state,
