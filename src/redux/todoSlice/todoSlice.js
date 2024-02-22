@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { statusFilters } from "../../components/todos/constants"
 import { todosTemplate } from "../templateArrs"
+import persistReducer from "redux-persist/es/persistReducer"
+import { persistConfig } from "../store"
 
 const todoSlice = createSlice({
   name: 'todo',
@@ -98,7 +100,10 @@ const todoSlice = createSlice({
   }
 })
 
-export const todoReduser = todoSlice.reducer
+export const persistedTodosReducer = persistReducer(
+  persistConfig,
+  todoSlice.reducer
+)
 export const {
   addTodo,
   removeTodo,
