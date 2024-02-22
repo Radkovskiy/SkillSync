@@ -1,9 +1,12 @@
 import { searchValueReducer } from "./searchValueSlice/searchValueSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { persistedTodosReducer, todoReduser } from "./todoSlice/todoSlice";
-import { persistedContactsReducer } from "./contactsSlice/contactsSlice";
+// import { persistedTodosReducer } from "./todoSlice/todoSlice";
+// import { persistedContactsReducer } from "./contactsSlice/contactsSlice";
 import storage from "redux-persist/lib/storage";
-import { persistStore } from 'redux-persist'
+import { persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import { contactSliceReduser } from "./contactsSlice/contactsSlice";
+import { todoSliceReducer } from "./todoSlice/todoSlice";
+import persistReducer from "redux-persist/es/persistReducer";
 
 export const persistConfig = {
   key: 'root',
@@ -12,13 +15,26 @@ export const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-  todo: persistedTodosReducer,
-  contacts: persistedContactsReducer,
+  todo: persistReducer(
+    persistConfig,
+    todoSliceReducer
+  ),
+  contacts: persistReducer(
+    persistConfig,
+    contactSliceReduser
+  ),
   filterValue: searchValueReducer
 })
 
 export const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    });
+  },
 });
 
 export const persistor = persistStore(store)
@@ -98,7 +114,6 @@ export const store = configureStore({
     todoArr: myReducer
   }
 }) */
-
 /* 
 const reducer = (state, action) => {
 
@@ -234,9 +249,3 @@ export const store = createStore(reducer, {
   counterResult: 0
 })
  */
-
-
-
-
-
-
