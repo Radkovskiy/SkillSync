@@ -41,21 +41,12 @@ const contactSlice = createSlice({
     },
     setNumber(state, action) {
       state.newNumber = action.payload
-      /* 
-      return {
-        ...state,
-        contacts: {
-          ...state.contacts,
-          newNumber: action.payload.number
-        }
-      } */
     }
   }
 })
 
 
-export const contactSliceReduser = contactSlice.reducer
-
+export const contactSliceReducer = contactSlice.reducer
 export const {
   addContact,
   removeContact,

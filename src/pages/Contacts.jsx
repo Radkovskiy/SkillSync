@@ -1,4 +1,3 @@
- 
 import RenderContacts from '../components/contacts/RenderContacts'
 import ContactsSearchBar from '../components/contacts/ContactsSearchBar'
 import ContactForm from '../components/contacts/ContactForm'
@@ -14,9 +13,3 @@ const Contacts = () => {
 }
 
 export default Contacts
-
-// /* 
-// 🟢поиск
-// 🟢удаление
-// 🔴локалсторейдж
-// */

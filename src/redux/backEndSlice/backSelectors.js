@@ -1,0 +1,1 @@
+export const backState = state => state.backEnd.backEnd

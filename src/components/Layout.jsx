@@ -1,4 +1,4 @@
- 
+
 import { NavLink, Outlet } from 'react-router-dom'
 
 const Layout = () => {
@@ -9,7 +9,7 @@ const Layout = () => {
           <nav className='nav'>
             <NavLink className={'navLink'} to="/todos">Todos</NavLink>
             <NavLink className={'navLink'} to="/contacts">Contacts</NavLink>
-            <NavLink className={'navLink'} to="/counter">Counter</NavLink>
+            <NavLink className={'navLink'} to="/backend">backend</NavLink>
           </nav>
         </div>
       </header>

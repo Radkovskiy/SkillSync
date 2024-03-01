@@ -2,10 +2,11 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { statusFilters } from './constants'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { editDescription, editName, removeTodo, toggleStatus } from '../../redux/todoSlice/todoSlice'
 import { selectFilterValue } from '../../redux/searchValueSlice/selectors'
-import { todoState } from '../../redux/todoSlice/selectors'
+import { todoState } from '../../redux/todoSlice/todosSelectors'
+import { deleteTodoThunk, getTodosThunk } from '../../redux/thunk'
 
 
 const TodoList = styled.ul`
@@ -54,36 +55,39 @@ right: 10px;
 top: 10px;
 `
 
-const onFilterTodosByValue = (todos, searchValue) => {
-  return todos.filter(todo =>
-    todo.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-    todo.description.toLowerCase().includes(searchValue.toLowerCase()))
-}
-
-const onFilterTodosByStatus = (todos, status) => {
-  switch (status) {
-    case statusFilters.active:
-      return todos.filter(todo => !todo.completed);
-    case statusFilters.completed:
-      return todos.filter(todo => todo.completed);
-    default:
-      return todos;
-  }
-};
-
-
-
 
 const RenderTodos = () => {
   const dispatch = useDispatch()
-  const todo = useSelector(todoState)
+  const { todoArr, statusFilter, status, error } = useSelector(todoState)
   const filterValue = useSelector(selectFilterValue)
   const [editingTodo, setEditingTodo] = useState(null);
   const [editingEl, setEditingEl] = useState(null);
 
+  useEffect(() => {
+    dispatch(getTodosThunk())
+  }, [dispatch]);
+
+
+
+  const onFilterTodosByValue = (todos, searchValue) => {
+    return todos.filter(todo =>
+      todo.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+      todo.description.toLowerCase().includes(searchValue.toLowerCase()))
+  }
+
+  const onFilterTodosByStatus = (todos, status) => {
+    switch (status) {
+      case statusFilters.active:
+        return todos.filter(todo => !todo.completed);
+      case statusFilters.completed:
+        return todos.filter(todo => todo.completed);
+      default:
+        return todos;
+    }
+  }
 
   const handleRemove = (id) => {
-    dispatch(removeTodo(id))
+    dispatch(deleteTodoThunk(id))
   }
 
   const handleToggle = (id) => {
@@ -111,8 +115,8 @@ const RenderTodos = () => {
   }
 
 
-  const filteredTodosByValue = onFilterTodosByValue(todo.todoArr, filterValue)
-  const visibleTodos = onFilterTodosByStatus(filteredTodosByValue, todo.statusFilter)
+  const filteredTodosByValue = onFilterTodosByValue(todoArr, filterValue)
+  const visibleTodos = onFilterTodosByStatus(filteredTodosByValue, statusFilter)
 
   return (
     <TodoList>

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { addContact, setName, setNumber } from '../../redux/contactsSlice/contactsSlice';
+import { newContactData } from '../../redux/contactsSlice/contactsSelectors';
 
 const FormWrapp = styled.form`
   display: flex;
@@ -15,7 +16,7 @@ const FormWrapp = styled.form`
 
 const ContactForm = () => {
   const dispatch = useDispatch()
-  const { contacts: { newName, newNumber } } = useSelector(state => state);
+  const { newName, newNumber } = useSelector(newContactData);
 
   const handleChange = ({ target: { value } }, type) => {
     type === 'setName' ? dispatch(setName(value)) : dispatch(setNumber(value))

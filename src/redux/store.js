@@ -1,27 +1,32 @@
 import { searchValueReducer } from "./searchValueSlice/searchValueSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
-import { persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
-import { contactSliceReduser } from "./contactsSlice/contactsSlice";
-import { todoSliceReducer } from "./todoSlice/todoSlice";
 import persistReducer from "redux-persist/es/persistReducer";
+import {
+  persistStore, FLUSH, REHYDRATE,
+  PAUSE, PERSIST, PURGE, REGISTER
+} from 'redux-persist';
+import { contactSliceReducer } from "./contactsSlice/contactsSlice";
+import { todoSliceReducer } from "./todoSlice/todoSlice";
+import { backReducer } from "./backEndSlice/backEndSlice";
+
 
 export const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['todoArr', 'contactsArr']
 }
 
 const rootReducer = combineReducers({
   todo: persistReducer(
-    persistConfig,
+    { ...persistConfig, whitelist: ['todoArr'] },
     todoSliceReducer
   ),
   contacts: persistReducer(
-    persistConfig,
-    contactSliceReduser
+    { ...persistConfig, whitelist: ['contactsArr'] },
+    contactSliceReducer
   ),
-  filterValue: searchValueReducer
+  filterValue: searchValueReducer,
+  backEnd: backReducer
 })
 
 export const store = configureStore({

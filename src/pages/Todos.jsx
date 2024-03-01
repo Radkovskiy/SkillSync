@@ -1,9 +1,10 @@
- 
+
 import TodoSearchBar from '../components/todos/TodoSearchBar'
 import TodoForm from '../components/todos/TodoForm'
 import RenderTodos from '../components/todos/RenderTodos'
 import FilterButtons from '../components/todos/FilterButtons'
 import styled from 'styled-components'
+import { useState } from 'react'
 
 const FiltersWrapp = styled.div`
   display: flex;
@@ -33,6 +34,6 @@ export default Todos
 🟢поиск тудушек 
 🟢сортировка по чекбоксам
 🟢изменение тудушек
-🔴local storage
+🟢local storage
 🟢удаление тудушек
 */

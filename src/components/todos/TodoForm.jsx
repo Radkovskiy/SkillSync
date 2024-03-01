@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
-import { addTodo } from '../../redux/todoSlice/todoSlice';
+import { addTodo } from '../../fetchAPI';
+import { getTodosThunk,  postTodoThunk } from '../../redux/thunk';
 
 const FormWrapp = styled.form`
   display: flex;
@@ -32,6 +32,8 @@ const TodoForm = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+
+
   const handleChange = ({ target: { value, name } }) => {
     if (name === 'name') {
       setName(value)
@@ -42,18 +44,18 @@ const TodoForm = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     const isEmptyInputValue = name.trim() && description.trim()
 
     if (isEmptyInputValue) {
-      dispatch(addTodo({
+      const newTodo = {
         name,
         description,
-        completed: false,
-        id: uuidv4()
-      }))
+        completed: false
+      }
+      dispatch( postTodoThunk(newTodo))
       reset()
     } else {
       alert("Заполни оба поля!")

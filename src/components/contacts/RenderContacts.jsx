@@ -1,9 +1,10 @@
 
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { contactsState } from '../../redux/contactsSlice/selectors'
+import { contactsState } from '../../redux/contactsSlice/contactsSelectors'
 import { selectFilterValue } from '../../redux/searchValueSlice/selectors'
 import { removeContact } from '../../redux/contactsSlice/contactsSlice'
+import { get_contacts } from '../../fetchAPI'
 
 const ContactList = styled.ul`
   display: flex;
@@ -40,14 +41,16 @@ const onFilterContactsByValue = (contacts, searchValue) => {
 
 const RenderContacts = () => {
   const dispatch = useDispatch()
-  const { contactsArr } = useSelector(contactsState);
+  const contacts = useSelector(contactsState);
   const searchValue = useSelector(selectFilterValue);
+
+  console.log('contacts :>> ', contacts);
 
   const handleClick = (id) => {
     dispatch(removeContact(id))
   }
 
-  const visibleContacts = onFilterContactsByValue(contactsArr, searchValue)
+  const visibleContacts = onFilterContactsByValue(contacts, searchValue)
 
   return (
     <ContactList>
