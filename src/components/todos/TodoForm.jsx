@@ -55,7 +55,7 @@ const TodoForm = () => {
         description,
         completed: false
       }
-      dispatch( postTodoThunk(newTodo))
+      dispatch(postTodoThunk(newTodo))
       reset()
     } else {
       alert("Заполни оба поля!")

@@ -28,6 +28,15 @@ export const postTodoThunk = createAsyncThunk('todos/addTodo', async (newTodo, {
   }
 })
 
+export const putTodoThunk = createAsyncThunk('todos/editTodo', async (body, { rejectWithValue }) => {
+  try {
+    const { data } = await instance.put(`todos/${body.id}`, body)
+    return data
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+})
+
 export const deleteTodoThunk = createAsyncThunk('todos/deleteTodo', async (id, { rejectWithValue }) => {
   try {
     const { data } = await instance.delete(`todos/${id}`)

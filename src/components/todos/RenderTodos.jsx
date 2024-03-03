@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { editDescription, editName, removeTodo, toggleStatus } from '../../redux/todoSlice/todoSlice'
 import { selectFilterValue } from '../../redux/searchValueSlice/selectors'
 import { todoState } from '../../redux/todoSlice/todosSelectors'
-import { deleteTodoThunk, getTodosThunk } from '../../redux/thunk'
+import { deleteTodoThunk, getTodosThunk, putTodoThunk } from '../../redux/thunk'
 
 
 const TodoList = styled.ul`
@@ -98,14 +98,24 @@ const RenderTodos = () => {
     const value = e.currentTarget.value
     if (!value.length) return
 
+    const todoForSwitch = todoArr.find(todo => todo.id === id)
+
     switch (typeEdit) {
       case 'name':
-        dispatch(editName({ value, id }));
+        const todoWidthNewName = {
+          ...todoForSwitch,
+          name: value
+        }
+        dispatch(putTodoThunk(todoWidthNewName))
         break;
 
 
       case 'description':
-        dispatch(editDescription({ value, id }));
+        const todoWidthNewDesc = {
+          ...todoForSwitch,
+          description: value
+        }
+        dispatch(putTodoThunk(todoWidthNewDesc))
         break;
 
       default:
