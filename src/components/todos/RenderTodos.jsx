@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { statusFilters } from './constants'
 import { useEffect, useState } from 'react'
-import { editDescription, editName, removeTodo, toggleStatus } from '../../redux/todoSlice/todoSlice'
 import { selectFilterValue } from '../../redux/searchValueSlice/selectors'
 import { todoState } from '../../redux/todoSlice/todosSelectors'
 import { deleteTodoThunk, getTodosThunk, putTodoThunk } from '../../redux/thunk'
+import { PENDING, FULFILLED, REJECTED } from '../../utils/StatusConstants'
 
 
 const TodoList = styled.ul`
@@ -91,7 +91,12 @@ const RenderTodos = () => {
   }
 
   const handleToggle = (id) => {
-    dispatch(toggleStatus(id))
+    const todoForToggle = todoArr.find(todo => todo.id === id)
+    const todoWithUpdatedToggle = {
+      ...todoForToggle,
+      completed: !todoForToggle.completed
+    }
+    dispatch(putTodoThunk(todoWithUpdatedToggle))
   }
 
   const changeValue = (e, id, typeEdit) => {
@@ -128,50 +133,57 @@ const RenderTodos = () => {
   const filteredTodosByValue = onFilterTodosByValue(todoArr, filterValue)
   const visibleTodos = onFilterTodosByStatus(filteredTodosByValue, statusFilter)
 
-  return (
-    <TodoList>
-      {visibleTodos.map(({ name, description, id, completed }) => (
-        <TodoItem key={id}>
-          <CheckboxCompleted
-            type="checkbox"
-            checked={completed}
-            onChange={() => handleToggle(id)}
-          />
-          <div>
-            <TodoName onDoubleClick={() => {
-              setEditingEl('name')
-              setEditingTodo(id)
-            }}>{editingEl === 'name' && editingTodo === id ?
-              <InputEditName
-                className='input inputEditName'
-                placeholder={`${name}`}
-                onBlur={e => {
-                  setEditingTodo(null)
-                  changeValue(e, id, 'name')
-                }} />
-              : name}</TodoName>
-            <p
-              onDoubleClick={() => {
-                setEditingEl('description')
+  if (status === PENDING)
+    return (
+      <div>
+        <span>Loading...</span>
+      </div>)
+  else if (status === FULFILLED)
+    return (
+      <TodoList>
+        {visibleTodos.map(({ name, description, id, completed }) => (
+          <TodoItem key={id}>
+            <CheckboxCompleted
+              type="checkbox"
+              checked={completed}
+              onChange={() => handleToggle(id)}
+            />
+            <div>
+              <TodoName onDoubleClick={() => {
+                setEditingEl('name')
                 setEditingTodo(id)
-              }}>
-              {editingEl === 'description' && editingTodo === id ?
-                <input
-                  className='input'
-                  placeholder={`${description}`}
+              }}>{editingEl === 'name' && editingTodo === id ?
+                <InputEditName
+                  className='input inputEditName'
+                  placeholder={`${name}`}
                   onBlur={e => {
                     setEditingTodo(null)
-                    changeValue(e, id, 'description')
+                    changeValue(e, id, 'name')
                   }} />
-                : description}
-            </p>
-          </div>
+                : name}</TodoName>
+              <p
+                onDoubleClick={() => {
+                  setEditingEl('description')
+                  setEditingTodo(id)
+                }}>
+                {editingEl === 'description' && editingTodo === id ?
+                  <input
+                    className='input'
+                    placeholder={`${description}`}
+                    onBlur={e => {
+                      setEditingTodo(null)
+                      changeValue(e, id, 'description')
+                    }} />
+                  : description}
+              </p>
+            </div>
 
-          <DeleteBtn onClick={() => handleRemove(id)}></DeleteBtn>
-        </TodoItem>
-      ))}
-    </TodoList>
-  )
+            <DeleteBtn onClick={() => handleRemove(id)}></DeleteBtn>
+          </TodoItem>
+        ))}
+      </TodoList>
+    )
+  else if (status === REJECTED) return <div><span>{error}</span></div>
 }
 
 export default RenderTodos

@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { addContact, setName, setNumber } from '../../redux/contactsSlice/contactsSlice';
 import { newContactData } from '../../redux/contactsSlice/contactsSelectors';
+import { useState } from 'react';
+import { postContactThunk } from '../../redux/thunk';
 
 const FormWrapp = styled.form`
   display: flex;
@@ -16,59 +18,40 @@ const FormWrapp = styled.form`
 
 const ContactForm = () => {
   const dispatch = useDispatch()
-  const { newName, newNumber } = useSelector(newContactData);
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  const handleChange = ({ target: { value } }, type) => {
-    type === 'setName' ? dispatch(setName(value)) : dispatch(setNumber(value))
+  const handleChange = ({ target: { value, name } }) => {
+    if (name === 'name') {
+      setName(value)
+    }
 
-    /*     
-        dispatch({
-          type,
-          payload: { [type === 'setNumber' ? 'name' : 'number']: value }
-        }); */
-    /*     
-        switch (type) {
-          case 'setName':
-            dispatch({
-              type: 'setName',
-              payload: {
-                name: value
-              }
-            })
-            break;
-    
-          case 'setNumber':
-            dispatch({
-              type: 'setNumber',
-              payload: {
-                number: value
-              }
-            })
-            break;
-    
-          default:
-            break;
-        } 
-    */
+    if (name === 'number') {
+      setNumber(value)
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const isEmptyInputValue = newName.trim() && newNumber.trim()
+    const isEmptyInputValue = name.trim() && number.trim()
 
     if (isEmptyInputValue) {
-      dispatch(addContact({
-        name: newName,
-        number: newNumber,
-        id: uuidv4()
-      }))
+      const newContact = {
+        name,
+        number,
+      }
+      dispatch(postContactThunk(newContact))
+      reset()
     } else {
       alert("Заполни оба поля!")
       return
     }
+  }
 
-
+  const reset = () => {
+    setName('')
+    setNumber('')
   }
 
   return (
@@ -80,16 +63,16 @@ const ContactForm = () => {
           className='input contactInput'
           type="text"
           name='name'
-          value={newName}
-          onChange={e => handleChange(e, 'setName')} />
+          value={name}
+          onChange={handleChange} />
         Телефон
         <input
           className='input contactInput'
           type="tel"
           name='number'
           pattern="[0-9+]+"
-          value={newNumber}
-          onChange={e => handleChange(e, 'setNumber')} />
+          value={number}
+          onChange={handleChange} />
         <button
           type='submit'
           className='button'>

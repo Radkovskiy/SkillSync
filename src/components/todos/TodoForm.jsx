@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components';
-import { addTodo } from '../../fetchAPI';
-import { getTodosThunk,  postTodoThunk } from '../../redux/thunk';
+import { postTodoThunk } from '../../redux/thunk';
 
 const FormWrapp = styled.form`
   display: flex;

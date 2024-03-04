@@ -1,41 +1,70 @@
-// import axios from "axios";
-// import { getTodosThunk } from "./redux/thunk";
+import axios from "axios";
 
-// export const instance = axios.create({
-//   baseURL: 'https://65db89083ea883a15291e054.mockapi.io/skillsync',
-//   headers: {
-//     'Content-Type': 'application/json',
-//     Accept: 'application/json',
-//   },
-// })
+const instance = axios.create({
+  baseURL: 'https://65db89083ea883a15291e054.mockapi.io/skillsync',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
+})
+export const getTodos = async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await instance.get('todos')
+    return data
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+}
+export const postTodos = async (newTodo, { rejectWithValue }) => {
+  try {
+    const body = JSON.stringify(newTodo)
+    const { data } = await instance.post('todos', body)
+    return data
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+}
+export const putTodos = async (body, { rejectWithValue }) => {
+  try {
+    const { data } = await instance.put(`todos/${body.id}`, body)
+    return data
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+}
+export const deleteTodos = async (id, { rejectWithValue }) => {
+  try {
+    const { data } = await instance.delete(`todos/${id}`)
+    console.log('delete data :>> ', data);
+    return id
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+}
 
-// export const addTodo = async (newTodo) => {
-//   try {
-//     const body = JSON.stringify(newTodo)
-//     const data = await instance.post('todos', body)
-//     return data
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-/* export const addTodoDefaultFetch = async (newTodo) => {
-  fetch('https://65db89083ea883a15291e054.mockapi.io/skillsync/todos', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newTodo)
-  }).then(r => {
-    if (!r.ok) {
-      throw new Error(`HTTP error! Status: ${r.status}`);
-    }
-    return r.json()
-  }).then(r => {
-    // getTodosThunk()
-    console.log('Success:', r);
-  })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-} */
+export const getContacts = async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await instance.get('contacts')
+    return data
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+}
+export const postContacts = async (newContact, { rejectWithValue }) => {
+  try {
+    const body = JSON.stringify(newContact)
+    const { data } = await instance.post('contacts', body)
+    return data
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+}
+export const deleteContacts = async (id, { rejectWithValue }) => {
+  try {
+    const { data } = await instance.delete(`contacts/${id}`)
+    console.log('delete data :>> ', data);
+    return id
+  } catch (error) {
+    return rejectWithValue(error)
+  }
+}

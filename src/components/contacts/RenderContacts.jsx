@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { contactsState } from '../../redux/contactsSlice/contactsSelectors'
 import { selectFilterValue } from '../../redux/searchValueSlice/selectors'
 import { removeContact } from '../../redux/contactsSlice/contactsSlice'
-import { get_contacts } from '../../fetchAPI'
+import { useEffect } from 'react'
+import { deleteContactThunk, getContactsThunk } from '../../redux/thunk'
+import { FULFILLED, PENDING, REJECTED } from '../../utils/StatusConstants'
 
 const ContactList = styled.ul`
   display: flex;
@@ -33,38 +35,48 @@ right: 10px;
 top: 10px;
 `
 
-const onFilterContactsByValue = (contacts, searchValue) => {
-  return contacts.filter(contact =>
-    contact.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-    contact.number.toLowerCase().includes(searchValue.toLowerCase()))
-}
+
 
 const RenderContacts = () => {
   const dispatch = useDispatch()
-  const contacts = useSelector(contactsState);
+  const { contactsArr: contacts, status, error } = useSelector(contactsState);
   const searchValue = useSelector(selectFilterValue);
 
-  console.log('contacts :>> ', contacts);
+  useEffect(() => {
+    dispatch(getContactsThunk())
+  }, [dispatch]);
 
   const handleClick = (id) => {
-    dispatch(removeContact(id))
+    dispatch(deleteContactThunk(id))
   }
 
-  const visibleContacts = onFilterContactsByValue(contacts, searchValue)
+  const onFilterContactsByValue = (contacts, searchValue) => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+      contact.number.toLowerCase().includes(searchValue.toLowerCase()))
+  }
 
-  return (
-    <ContactList>
-      {visibleContacts.map(({ name, number, id }) => (
-        <ContactItem key={id}>
-          <div>
-            <p>{name}</p>
-            <p>{number}</p>
-          </div>
-          <DeleteBtn onClick={() => handleClick(id)}></DeleteBtn>
-        </ContactItem>
-      ))}
-    </ContactList>
-  )
+  const visibleContacts = onFilterContactsByValue(contacts, searchValue) // ломается, когда пишу "5"
+  if (status === PENDING)
+    return (
+      <div>Loading...</div>
+    )
+  else if (status === FULFILLED)
+    return (
+      <ContactList>
+        {visibleContacts.map(({ name, number, id }) => (
+          <ContactItem key={id}>
+            <div>
+              <p>{name}</p>
+              <p>{number}</p>
+            </div>
+            <DeleteBtn onClick={() => handleClick(id)}></DeleteBtn>
+          </ContactItem>
+        ))}
+      </ContactList>
+    )
+  else if (status === REJECTED) return <div><span>{error}</span></div>
+
 }
 
 export default RenderContacts
